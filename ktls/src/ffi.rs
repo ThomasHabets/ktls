@@ -72,7 +72,7 @@ pub enum CryptoInfo {
 }
 
 impl CryptoInfo {
-    fn as_ptr(&self) -> *const libc::c_void {
+    pub fn as_ptr(&self) -> *const libc::c_void {
         match self {
             CryptoInfo::AesGcm128(info) => info as *const _ as *const libc::c_void,
             CryptoInfo::AesGcm256(info) => info as *const _ as *const libc::c_void,
@@ -83,7 +83,7 @@ impl CryptoInfo {
         }
     }
 
-    fn size(&self) -> usize {
+    pub fn size(&self) -> usize {
         match self {
             CryptoInfo::AesGcm128(_) => std::mem::size_of::<ktls::tls12_crypto_info_aes_gcm_128>(),
             CryptoInfo::AesGcm256(_) => std::mem::size_of::<ktls::tls12_crypto_info_aes_gcm_256>(),

@@ -24,8 +24,8 @@ use tokio::{
     net::{TcpListener, TcpStream},
 };
 
-mod ffi;
-use crate::ffi::CryptoInfo;
+pub mod ffi;
+pub use crate::ffi::CryptoInfo;
 
 mod async_read_ready;
 pub use async_read_ready::AsyncReadReady;
@@ -320,7 +320,7 @@ async fn drain(stream: &mut (impl AsyncRead + Unpin)) -> std::io::Result<Option<
     Ok(maybe_drained)
 }
 
-fn setup_inner(fd: RawFd, conn: Connection) -> Result<(), Error> {
+pub fn setup_inner(fd: RawFd, conn: Connection) -> Result<(), Error> {
     let cipher_suite = match conn.negotiated_cipher_suite() {
         Some(cipher_suite) => cipher_suite,
         None => {
